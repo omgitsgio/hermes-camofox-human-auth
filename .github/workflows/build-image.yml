@@ -38,6 +38,8 @@ jobs:
       - name: Check pinned Camofox patches
         run: |
           git clone --depth 1 --branch master https://github.com/jo-inc/camofox-browser.git vendor/camofox-browser
+          git -C vendor/camofox-browser fetch --depth 1 origin ce3a3b085aacba73eb8de6c51733c19fb13bfae4
+          git -C vendor/camofox-browser checkout --detach ce3a3b085aacba73eb8de6c51733c19fb13bfae4
           test "$(git -C vendor/camofox-browser rev-parse HEAD)" = "ce3a3b085aacba73eb8de6c51733c19fb13bfae4"
           for patch in patches/*.patch; do
             (cd vendor/camofox-browser && git apply --check --ignore-space-change --ignore-whitespace "$GITHUB_WORKSPACE/$patch")
